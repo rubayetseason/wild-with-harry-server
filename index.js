@@ -23,6 +23,7 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     const serviceCollection = client.db("HarryDB").collection("services");
+    const reviewCollection = client.db("HarryDB").collection("reviews");
 
     app.get("/services", async (req, res) => {
       const query = {};
@@ -43,6 +44,13 @@ async function run() {
       const cursor = serviceCollection.find(query);
       const limitedService = await cursor.limit(3).toArray();
       res.send(limitedService);
+
+      //reviews start here
+      app.post("/reviews", async (req, res) => {
+        const review = req.body;
+        const result = await reviewCollection.insertOne(review);
+        res.send(result);
+      });
     });
   } finally {
   }
