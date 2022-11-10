@@ -96,7 +96,7 @@ async function run() {
         const updateResult = await reviewCollection.findOne(query);
         res.send(updateResult);
       });
-
+//separate API for my comments
       app.get("/myreviews", verifyJWT, async (req, res) => {
         const decoded = req.decoded;
         if (decoded.email !== req.query.email) {
