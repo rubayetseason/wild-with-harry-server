@@ -90,6 +90,13 @@ async function run() {
         res.send(result);
       });
 
+      app.get("/reviews/:id", async (req, res) => {
+        const id = req.params.id;
+        const query = { _id: ObjectId(id) };
+        const updateResult = await reviewCollection.findOne(query);
+        res.send(updateResult);
+      });
+
       app.get("/myreviews", verifyJWT, async (req, res) => {
         const decoded = req.decoded;
         if (decoded.email !== req.query.email) {
